@@ -20,7 +20,7 @@
 		F29144033088517900D6E5EE /* Exceptions for "BucketAndAfter-iOS" folder in "BucketAndAfter-iOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				App/Info.plist,
 			);
 			target = F29143F03088517900D6E5EE /* BucketAndAfter-iOS */;
 		};
