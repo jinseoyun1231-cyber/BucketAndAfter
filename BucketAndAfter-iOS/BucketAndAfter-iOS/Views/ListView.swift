@@ -26,8 +26,15 @@ final class ListView : UIView {
         super.init(frame: .zero)
         
         number.text = "\(numberI)"
-        title.text = titleT
         title.textColor = isDone ? UIColor(named: "gray600") : .black
+        
+        if isDone {
+            let strikeA = NSMutableAttributedString(string: titleT)
+            strikeA.addAttribute(.strikethroughStyle, value: NSUnderlineStyle.single.rawValue, range: NSMakeRange(0, strikeA.length))
+            title.attributedText = strikeA
+        } else {
+            title.text = titleT
+        }
         
         setupLayout()
     }
