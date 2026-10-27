@@ -13,6 +13,7 @@ final class ListView : UIView {
     let card = UIButton().then {
         $0.layer.cornerRadius = 5
         $0.backgroundColor = UIColor(named: "gray100")
+        $0.addTarget(self, action: #selector(cardTapped), for: .touchUpInside)
     }
     let number = UILabel().then {
         $0.textColor = UIColor(named: "main800")
@@ -59,5 +60,9 @@ final class ListView : UIView {
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(number.snp.trailing).offset(26)
         }
+    }
+    @objc private func cardTapped() {
+        //카드 클릭됨. 그 버킷리스트의 정보 더보기 페이지로 이동 로직 짜기
+        print("리스트 카드 탭")
     }
 }
