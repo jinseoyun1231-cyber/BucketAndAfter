@@ -13,10 +13,11 @@ final class NavigationBarView : UIView {
     let TitleText = UILabel().then {
         $0.text = "BucketAndAfter"
         $0.font = .systemFont(ofSize: 32, weight: .heavy)
+        $0.textColor = UIColor(named: "main800")
     }
     let button = UIButton(type: .system).then {
         $0.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
-        $0.tintColor = .white
+        $0.tintColor = UIColor(named: "main800")
         $0.layer.cornerRadius = 24
     }
     
@@ -40,6 +41,7 @@ final class NavigationBarView : UIView {
         button.snp.makeConstraints {
             $0.centerY.equalTo(TitleText)
             $0.leading.equalToSuperview().inset(16)
+            $0.size.equalTo(48)
         }
     }
 }
