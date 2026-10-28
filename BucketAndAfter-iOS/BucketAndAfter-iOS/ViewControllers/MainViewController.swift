@@ -16,6 +16,12 @@ class MainViewController: UIViewController {
         $0.axis = .vertical
         $0.spacing = 16
     }
+    let plusButton = UIButton().then {
+        $0.setImage(UIImage(systemName: "plus"), for: .normal)
+        $0.tintColor = UIColor(named: "main800")
+        $0.backgroundColor = UIColor(named: "main100")
+        $0.layer.cornerRadius = 24
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +33,7 @@ class MainViewController: UIViewController {
     private func setupLayout() {
         view.addSubview(navBar)
         view.addSubview(scrollView)
+        view.addSubview(plusButton)
         
         scrollView.addSubview(stackView)
         
@@ -41,6 +48,11 @@ class MainViewController: UIViewController {
         stackView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
             $0.trailing.leading.equalTo(scrollView.frameLayoutGuide).inset(16)
+        }
+        plusButton.snp.makeConstraints {
+            $0.size.equalTo(48)
+            $0.trailing.equalToSuperview().inset(36)
+            $0.bottom.equalToSuperview().inset(58)
         }
     }
     private func makeListCard() {
