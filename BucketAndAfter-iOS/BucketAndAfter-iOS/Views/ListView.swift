@@ -22,11 +22,13 @@ final class ListView : UIView {
     let title = UILabel().then {
         $0.font = .systemFont(ofSize: 16, weight: .regular)
     }
+    var numberInt = 0
     
     init(numberI : Int, titleT : String, isDone : Bool) {
         super.init(frame: .zero)
         
         number.text = "\(numberI)"
+        numberInt = numberI
         title.textColor = isDone ? UIColor(named: "gray600") : .black
         
         if isDone {
@@ -51,6 +53,7 @@ final class ListView : UIView {
         card.snp.makeConstraints {
             $0.height.equalTo(57)
             $0.leading.trailing.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
         }
         number.snp.makeConstraints {
             $0.centerY.equalToSuperview()
@@ -63,6 +66,6 @@ final class ListView : UIView {
     }
     @objc private func cardTapped() {
         //카드 클릭됨. 그 버킷리스트의 정보 더보기 페이지로 이동 로직 짜기
-        print("리스트 카드 탭")
+        print("리스트 카드 탭\(numberInt)")
     }
 }
