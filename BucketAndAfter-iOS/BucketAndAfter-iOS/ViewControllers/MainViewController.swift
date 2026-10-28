@@ -21,6 +21,7 @@ class MainViewController: UIViewController {
         $0.tintColor = UIColor(named: "main800")
         $0.backgroundColor = UIColor(named: "main100")
         $0.layer.cornerRadius = 24
+        $0.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
     }
     
     override func viewDidLoad() {
@@ -60,7 +61,10 @@ class MainViewController: UIViewController {
             let listCard = ListView(numberI: i+1, titleT: "예시 텍스트 야호 나중에 값 넣기", isDone: i%3==0)
             
             stackView.addArrangedSubview(listCard)
-            
         }
+    }
+    @objc private func plusButtonTapped() {
+        print("생성버튼 탭")
+        self.navigationController?.pushViewController(AddBucketViewController(), animated: true)
     }
 }

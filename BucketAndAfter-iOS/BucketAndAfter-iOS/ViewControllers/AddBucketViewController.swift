@@ -7,3 +7,8 @@
 
 import UIKit
 
+final class AddBucketViewController : UIViewController {
+    override func viewDidLoad() {
+        
+    }
+}
