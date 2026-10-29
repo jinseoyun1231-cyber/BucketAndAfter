@@ -58,9 +58,15 @@ class MainViewController: UIViewController {
     }
     private func makeListCard() {
         for i in 0..<15 {
-            let listCard = ListView(numberI: i+1, titleT: "예시 텍스트 야호 나중에 값 넣기", isDone: i%3==0)
+            let listCard = ListView(numberI: i+1, titleT: "예시 텍스트 야호 나중에 값 넣기 \(i+1)", isDone: i%3==0)
             
             stackView.addArrangedSubview(listCard)
+            
+            listCard.changeView = {_ in 
+                let moreVC = BucketMoreViewConteroller()
+                self.navigationController?.pushViewController(moreVC, animated: true)
+                moreVC.setText(text: "예시 텍스트 야호 나중에 값 넣기 \(i+1)")
+            }
         }
     }
     @objc private func plusButtonTapped() {
