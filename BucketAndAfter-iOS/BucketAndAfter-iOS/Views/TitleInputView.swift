@@ -10,6 +10,11 @@ import SnapKit
 import Then
 final class TitleInputView : UIView {
     let textField = UITextField().then {
+        $0.leftView = UIView(frame: .init(x: 0, y: 0, width: 24, height: 0))
+        $0.leftViewMode = .always
+        $0.rightView = UIView(frame: .init(x: 0, y: 0, width: 24, height: 0))
+        $0.rightViewMode = .always
+        
         $0.placeholder = "여기에 버킷리스트 제목을 입력하세요."
         $0.textColor = .black
         $0.layer.cornerRadius = 5
