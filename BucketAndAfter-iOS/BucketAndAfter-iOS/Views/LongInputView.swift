@@ -10,20 +10,20 @@ import SnapKit
 import Then
 
 final class LongInputView : UIView {
-    let longTextField = UITextField().then {
-        $0.leftView = UIView(frame: .init(x: 0, y: 0, width: 24, height: 0))
-        $0.rightView = UIView(frame: .init(x: 0, y: 0, width: 24, height: 0))
-        $0.leftViewMode = .always
-        $0.rightViewMode = .always
+    let longTextField = UITextView().then {
         
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.textColor = .black
         $0.backgroundColor = UIColor(named: "gray100")
+        $0.layer.cornerRadius = 5
+    }
+    let placeholerLabel = UILabel().then {
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
+        $0.textColor = .placeholderText
     }
     init(placeholderT : String) {
         super.init(frame: .zero)
-        longTextField.placeholder = placeholderT
-        
+        placeholerLabel.text = placeholderT
         setupLayout()
     }
     required init?(coder: NSCoder) {
@@ -31,11 +31,16 @@ final class LongInputView : UIView {
     }
     private func setupLayout() {
         self.addSubview(longTextField)
+        longTextField.addSubview(placeholerLabel)
         
         longTextField.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(263)
             $0.top.bottom.equalToSuperview()
+        }
+        placeholerLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(24)
+            $0.top.equalTo(19)
         }
     }
 }
