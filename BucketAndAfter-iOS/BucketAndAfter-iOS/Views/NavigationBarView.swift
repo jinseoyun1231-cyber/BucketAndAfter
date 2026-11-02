@@ -20,16 +20,10 @@ final class NavigationBarView : UIView {
         $0.font = .systemFont(ofSize: 32, weight: .heavy)
         $0.textColor = UIColor(named: "main800")
     }
-    let button = UIButton(type: .system).then {
-        $0.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
-        $0.tintColor = UIColor(named: "main800")
-        $0.layer.cornerRadius = 24
-    }
     
-    init(isMain : Bool) {
+    init() {
         super.init(frame: .zero)
         self.backgroundColor = .white
-        button.isHidden = isMain
         setupLayout()
     }
     required init?(coder: NSCoder) {
@@ -38,21 +32,15 @@ final class NavigationBarView : UIView {
     private func setupLayout() {
         self.addSubview(NavBar)
         NavBar.addSubview(TitleText)
-        NavBar.addSubview(button)
         
         NavBar.snp.makeConstraints {
             $0.edges.equalToSuperview()
-            $0.height.equalTo(126)
+            $0.height.equalTo(115)
         }
         
         TitleText.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().inset(72)
-        }
-        button.snp.makeConstraints {
-            $0.centerY.equalTo(TitleText)
-            $0.leading.equalToSuperview().inset(16)
-            $0.size.equalTo(48)
+            $0.top.equalToSuperview().inset(67)
         }
     }
 }

@@ -10,7 +10,7 @@ import SnapKit
 import Then
 
 class MainViewController: UIViewController {
-    let navBar = NavigationBarView(isMain: true)
+    let navBar = NavigationBarView()
     let scrollView = UIScrollView()
     let stackView = UIStackView().then {
         $0.axis = .vertical
