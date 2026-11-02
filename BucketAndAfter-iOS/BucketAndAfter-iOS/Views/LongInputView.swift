@@ -44,6 +44,9 @@ final class LongInputView : UIView {
             $0.top.equalTo(19)
         }
     }
+    func setText(text : String) {
+        longTextField.text = text
+    }
 }
 extension LongInputView : UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {

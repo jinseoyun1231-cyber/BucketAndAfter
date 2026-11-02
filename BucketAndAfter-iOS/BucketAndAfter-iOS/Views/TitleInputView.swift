@@ -37,4 +37,7 @@ final class TitleInputView : UIView {
             $0.leading.trailing.equalToSuperview().inset(16)
         }
     }
+    func setText(text : String) {
+        textField.text = text
+    }
 }
