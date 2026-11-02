@@ -19,6 +19,7 @@ final class TitleInputView : UIView {
         $0.textColor = .black
         $0.layer.cornerRadius = 5
         $0.backgroundColor = UIColor(named: "gray100")
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
     }
     init() {
         super.init(frame: .zero)

@@ -11,7 +11,7 @@ import Then
 
 final class LongInputView : UIView {
     let longTextField = UITextView().then {
-        
+        $0.textContainerInset = UIEdgeInsets(top: 19, left: 19, bottom: 19, right: 24)
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.textColor = .black
         $0.backgroundColor = UIColor(named: "gray100")
@@ -25,6 +25,7 @@ final class LongInputView : UIView {
         super.init(frame: .zero)
         placeholerLabel.text = placeholderT
         setupLayout()
+        longTextField.delegate = self
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -42,5 +43,10 @@ final class LongInputView : UIView {
             $0.leading.equalToSuperview().inset(24)
             $0.top.equalTo(19)
         }
+    }
+}
+extension LongInputView : UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        placeholerLabel.isHidden = !textView.text.isEmpty
     }
 }
