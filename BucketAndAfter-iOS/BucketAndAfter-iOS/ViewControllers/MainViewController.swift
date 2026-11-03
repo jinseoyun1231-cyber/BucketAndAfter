@@ -8,8 +8,12 @@
 import UIKit
 import SnapKit
 import Then
+import SwiftData
 
 class MainViewController: UIViewController {
+    var bucketInfo : [BucketInfo] = []
+    var context = Container.mainContext
+    
     let navBar = NavigationBarView()
     let scrollView = UIScrollView()
     let stackView = UIStackView().then {
@@ -29,7 +33,17 @@ class MainViewController: UIViewController {
         view.backgroundColor = .white
         
         setupLayout()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         makeListCard()
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        stackView.arrangedSubviews.forEach {
+            stackView.removeArrangedSubview($0)
+            $0.removeFromSuperview()
+        }//stackView에 원래 추가 해 놨던 리스트카드 삭제
     }
     private func setupLayout() {
         view.addSubview(navBar)
@@ -57,17 +71,23 @@ class MainViewController: UIViewController {
         }
     }
     private func makeListCard() {
-        for i in 0..<15 {
-            let listCard = ListView(numberI: i+1, titleT: "예시 텍스트 야호 나중에 값 넣기 \(i+1)", isDone: i%3==0)
+        do {
+            let descriptor = FetchDescriptor<BucketInfo>()
+            bucketInfo = try context.fetch(descriptor)
             
-            stackView.addArrangedSubview(listCard)
-            
-            listCard.changeView = {_ in 
-                let moreVC = BucketMoreViewConteroller()
-                self.navigationController?.pushViewController(moreVC, animated: true)
-                moreVC.setText(text: "예시 텍스트 야호 나중에 값 넣기 \(i+1)")
+            for (i, data) in bucketInfo.enumerated(){
+                let listCard = ListView(numberI: i + 1, titleT: data.name, isDone: data.isDone)
+                stackView.addArrangedSubview(listCard)
+                listCard.changeView = { [weak self] _ in
+                    let moreVC = BucketMoreViewConteroller()
+                    self?.navigationController?.pushViewController(moreVC, animated: true)
+                }
             }
+        } catch {
+            print("버킷 목록 불러오기 실패..ㅜㅜ: \(error)")
         }
+        
+        
     }
     @objc private func plusButtonTapped() {
         print("생성버튼 탭")

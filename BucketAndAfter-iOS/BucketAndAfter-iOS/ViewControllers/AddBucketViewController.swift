@@ -40,6 +40,7 @@ final class AddBucketViewController : UIViewController {
         view.addSubview(TitleTextField)
         view.addSubview(moreTextField)
         view.addSubview(submitButton)
+        view.addSubview(errorLabel)
         
         navBar.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
@@ -58,9 +59,13 @@ final class AddBucketViewController : UIViewController {
             $0.width.equalTo(90)
             $0.top.equalTo(moreTextField.snp.bottom).offset(24)
         }
+        errorLabel.snp.makeConstraints {
+            $0.top.equalTo(submitButton)
+            $0.leading.equalToSuperview().inset(16)
+        }
     }
     @objc private func submit() {
-        if TitleTextField.textField.text!.isEmpty && moreTextField.textField.text.isEmpty {
+        if TitleTextField.textField.text!.isEmpty || moreTextField.textField.text.isEmpty {
             TitleTextField.textField.layer.borderColor = UIColor.red.cgColor
             TitleTextField.textField.layer.borderWidth = 1
             moreTextField.textField.layer.borderColor = UIColor.red.cgColor
@@ -69,8 +74,12 @@ final class AddBucketViewController : UIViewController {
         } else {
             let new = BucketInfo(isDone: false, name: TitleTextField.textField.text!, moreInfo: moreTextField.textField.text!, thoughts: "")
             context.insert(new)
-            
-            self.navigationController?.popViewController(animated: true)
+            do {
+                try context.save()
+                navigationController?.popViewController(animated: true)
+            } catch {
+                print("버킷 저장 실패: \(error)")
+            }
             errorLabel.isHidden = true
         }
     }
