@@ -8,11 +8,14 @@
 import UIKit
 import SnapKit
 import Then
+import SwiftData
 
 final class AddBucketViewController : UIViewController {
+    let context = ModelContext(Container)
+    
     let navBar = NavigationBarView()
-    let TitleTextField = TitleInputView()
-    let moreTextField = LongInputView(placeholderT: "여기에 세부사항을 입력 해 주세요")
+    let TitleTextField : TitleInputView = TitleInputView()
+    let moreTextField : LongInputView = LongInputView(placeholderT: "여기에 세부사항을 입력 해 주세요")
     let submitButton = UIButton(type: .system).then {
         $0.setTitle("확인", for: .normal)
         $0.backgroundColor = UIColor(named: "main100")
@@ -21,7 +24,12 @@ final class AddBucketViewController : UIViewController {
         $0.addTarget(self, action: #selector(submit), for: .touchUpInside)
         $0.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
     }
-    
+    let errorLabel = UILabel().then {
+        $0.textColor = .red
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
+        $0.text = "모든 필드를 채워주세요"
+        $0.isHidden = true
+    }
     override func viewDidLoad() {
         view.backgroundColor = .white
         
@@ -52,8 +60,18 @@ final class AddBucketViewController : UIViewController {
         }
     }
     @objc private func submit() {
-        //로컬에 저장 하고 그에 따른 에러메세지, pop 실행
-        //SwiftData 배워서 할 예정
-        self.navigationController?.popViewController(animated: true)
+        if TitleTextField.textField.text!.isEmpty && moreTextField.textField.text.isEmpty {
+            TitleTextField.textField.layer.borderColor = UIColor.red.cgColor
+            TitleTextField.textField.layer.borderWidth = 1
+            moreTextField.textField.layer.borderColor = UIColor.red.cgColor
+            moreTextField.textField.layer.borderWidth = 1
+            errorLabel.isHidden = false
+        } else {
+            let new = BucketInfo(isDone: false, name: TitleTextField.textField.text!, moreInfo: moreTextField.textField.text!, thoughts: "")
+            context.insert(new)
+            
+            self.navigationController?.popViewController(animated: true)
+            errorLabel.isHidden = true
+        }
     }
 }

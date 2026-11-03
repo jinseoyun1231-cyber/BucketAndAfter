@@ -10,7 +10,7 @@ import SnapKit
 import Then
 
 final class LongInputView : UIView {
-    let longTextField = UITextView().then {
+    let textField = UITextView().then {
         $0.textContainerInset = UIEdgeInsets(top: 19, left: 19, bottom: 19, right: 24)
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.textColor = .black
@@ -25,16 +25,16 @@ final class LongInputView : UIView {
         super.init(frame: .zero)
         placeholerLabel.text = placeholderT
         setupLayout()
-        longTextField.delegate = self
+        textField.delegate = self
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     private func setupLayout() {
-        self.addSubview(longTextField)
-        longTextField.addSubview(placeholerLabel)
+        self.addSubview(textField)
+        textField.addSubview(placeholerLabel)
         
-        longTextField.snp.makeConstraints {
+        textField.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(263)
             $0.top.bottom.equalToSuperview()
@@ -45,7 +45,7 @@ final class LongInputView : UIView {
         }
     }
     func setText(text : String) {
-        longTextField.text = text
+        textField.text = text
     }
 }
 extension LongInputView : UITextViewDelegate {
