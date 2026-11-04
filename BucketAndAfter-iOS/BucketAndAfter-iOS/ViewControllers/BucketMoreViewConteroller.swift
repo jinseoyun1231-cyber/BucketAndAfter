@@ -15,7 +15,15 @@ final class BucketMoreViewConteroller : UIViewController {
         $0.spacing = 16
         $0.axis = .vertical
     }
+    let buttonStack = UIStackView().then {
+        $0.axis = .horizontal
+        $0.spacing = 8
+        $0.alignment = .center
+        $0.distribution = .fill
+    }
+    
     let navBar = NavigationBarView()
+    
     let nameT = UILabel().then {
         $0.textColor = .black
         $0.font = .systemFont(ofSize: 24, weight: .bold)
@@ -36,6 +44,11 @@ final class BucketMoreViewConteroller : UIViewController {
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.textColor = .black
     }
+    
+    let writeButton = ButtonView(text: "소감 작성")
+    let editButton = ButtonView(text: "수정")
+    let deleteButton = ButtonView(text: "삭제")
+    
     override func viewDidLoad() {
         view.backgroundColor = .white
         setupLayout()
@@ -49,8 +62,20 @@ final class BucketMoreViewConteroller : UIViewController {
         
         scrollView.addSubview(stackView)
         
-        [nameT, moreT, thoughtL, thoughtT].forEach {
+        
+        [nameT, moreT, thoughtL, thoughtT, buttonStack].forEach {
             stackView.addArrangedSubview($0)
+        }
+        [writeButton, editButton, deleteButton].forEach {
+            $0.setContentHuggingPriority(
+                .required,
+                for: .horizontal
+            )
+            $0.setContentCompressionResistancePriority(
+                .required,
+                for: .horizontal
+            )
+            buttonStack.addArrangedSubview($0)
         }
         
         navBar.snp.makeConstraints {
