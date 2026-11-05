@@ -18,8 +18,9 @@ final class BucketMoreViewConteroller : UIViewController {
     let buttonStack = UIStackView().then {
         $0.axis = .horizontal
         $0.spacing = 8
-        $0.alignment = .center
-        $0.distribution = .fill
+        $0.alignment = .fill
+        $0.distribution = .equalSpacing
+        $0.semanticContentAttribute = .forceLeftToRight
     }
     
     let navBar = NavigationBarView()
@@ -48,6 +49,7 @@ final class BucketMoreViewConteroller : UIViewController {
     let writeButton = ButtonView(text: "소감 작성")
     let editButton = ButtonView(text: "수정")
     let deleteButton = ButtonView(text: "삭제")
+    let space = UIView()
     
     override func viewDidLoad() {
         view.backgroundColor = .white
@@ -62,19 +64,10 @@ final class BucketMoreViewConteroller : UIViewController {
         
         scrollView.addSubview(stackView)
         
-        
         [nameT, moreT, thoughtL, thoughtT, buttonStack].forEach {
             stackView.addArrangedSubview($0)
         }
-        [writeButton, editButton, deleteButton].forEach {
-            $0.setContentHuggingPriority(
-                .required,
-                for: .horizontal
-            )
-            $0.setContentCompressionResistancePriority(
-                .required,
-                for: .horizontal
-            )
+        [space, writeButton, editButton, deleteButton].forEach {
             buttonStack.addArrangedSubview($0)
         }
         
