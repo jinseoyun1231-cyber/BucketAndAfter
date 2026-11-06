@@ -46,14 +46,15 @@ final class BucketMoreViewConteroller : UIViewController {
         $0.textColor = .black
     }
     
-    let writeButton = ButtonView(text: "소감 작성")
-    let editButton = ButtonView(text: "수정")
-    let deleteButton = ButtonView(text: "삭제")
+    let writeButton:ButtonView = ButtonView(text: "소감 작성")
+    let editButton:ButtonView = ButtonView(text: "수정")
+    let deleteButton:ButtonView = ButtonView(text: "삭제")
     let space = UIView()
     
     override func viewDidLoad() {
         view.backgroundColor = .white
         setupLayout()
+        setButtonAction()
     }
     override func viewWillAppear(_ animated: Bool) {
         setText()
@@ -81,6 +82,18 @@ final class BucketMoreViewConteroller : UIViewController {
         stackView.snp.makeConstraints {
             $0.top.bottom.equalTo(scrollView.contentLayoutGuide)
             $0.leading.trailing.equalTo(scrollView.frameLayoutGuide).inset(16)
+        }
+    }
+    private func setButtonAction() {
+        writeButton.buttonTapped = {
+            self.navigationController?.pushViewController(WriteThoughtViewController(), animated: true)
+        }
+        editButton.buttonTapped = {
+            self.navigationController?.pushViewController(BucketEditViewController(), animated: true)
+        }
+        deleteButton.buttonTapped = {
+            //삭제 코드
+            self.navigationController?.popViewController(animated: true)
         }
     }
     func setText() {
