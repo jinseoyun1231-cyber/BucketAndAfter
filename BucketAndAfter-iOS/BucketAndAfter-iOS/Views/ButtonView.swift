@@ -15,10 +15,12 @@ final class ButtonView : UIView {
         $0.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         $0.layer.cornerRadius = 24
     }
+    var buttonTapped : (()->())?
     init(text : String) {
         super.init(frame: .zero)
         button.setTitle(text, for: .normal)
         setupLayout()
+        button.addTarget(self, action: #selector(tapped), for: .touchUpInside)
     }
     private func setupLayout() {
         self.addSubview(button)
@@ -31,5 +33,8 @@ final class ButtonView : UIView {
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    @objc private func tapped() {
+        buttonTapped?()
     }
 }

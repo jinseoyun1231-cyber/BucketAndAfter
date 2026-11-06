@@ -17,7 +17,7 @@ final class AddBucketViewController : UIViewController {
     
     let TitleTextField : TitleInputView = TitleInputView()
     let moreTextField : LongInputView = LongInputView(placeholderT: "여기에 세부사항을 입력 해 주세요")
-    let submitButton = ButtonView(text: "확인")
+    let submitButton:ButtonView = ButtonView(text: "확인")
     let errorLabel = UILabel().then {
         $0.textColor = .red
         $0.font = .systemFont(ofSize: 16, weight: .regular)
@@ -29,6 +29,9 @@ final class AddBucketViewController : UIViewController {
         view.backgroundColor = .white
         
         setupLayout()
+        submitButton.buttonTapped = {
+            self.submit()
+        }
     }
     private func setupLayout() {
         view.addSubview(navBar)
@@ -57,7 +60,7 @@ final class AddBucketViewController : UIViewController {
             $0.leading.equalToSuperview().inset(16)
         }
     }
-    @objc private func submit() {
+    private func submit() {
         if TitleTextField.textField.text!.isEmpty || moreTextField.textField.text.isEmpty {
             TitleTextField.textField.layer.borderColor = UIColor.red.cgColor
             TitleTextField.textField.layer.borderWidth = 1
