@@ -8,8 +8,12 @@
 import UIKit
 import SnapKit
 import Then
+import SwiftData
 
 final class BucketMoreViewConteroller : UIViewController {
+    var bucketInfo : [BucketInfo] = []
+    var context = Container.mainContext
+    
     let scrollView = UIScrollView()
     let stackView = UIStackView().then {
         $0.spacing = 16
@@ -56,9 +60,6 @@ final class BucketMoreViewConteroller : UIViewController {
         setupLayout()
         setButtonAction()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        setText()
-    }
     private func setupLayout() {
         view.addSubview(navBar)
         view.addSubview(scrollView)
@@ -96,7 +97,19 @@ final class BucketMoreViewConteroller : UIViewController {
             self.navigationController?.popViewController(animated: true)
         }
     }
-    func setText() {
-        //여기에 로컬에서 가져와 text 설정하는거 넣기
+    func setText(i : Int) {
+        do {
+            let descriptor = FetchDescriptor<BucketInfo>()
+            bucketInfo = try context.fetch(descriptor)
+            
+            let data = bucketInfo[i]
+            nameT.text = data.name
+            moreT.text = data.moreInfo
+            thoughtL.isHidden = data.isDone
+            thoughtT.text = data.thoughts
+            
+        } catch {
+            print("버킷 목록 불러오기 실패..ㅜㅜ: \(error)")
+        }
     }
 }
