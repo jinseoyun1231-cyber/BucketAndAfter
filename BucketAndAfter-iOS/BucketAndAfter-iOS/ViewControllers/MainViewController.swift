@@ -80,6 +80,7 @@ class MainViewController: UIViewController {
                 listCard.changeView = { [weak self] _ in
                     let moreVC = BucketMoreViewConteroller()
                     self?.navigationController?.pushViewController(moreVC, animated: true)
+                    moreVC.setText(i: i)
                 }
             }
         } catch {

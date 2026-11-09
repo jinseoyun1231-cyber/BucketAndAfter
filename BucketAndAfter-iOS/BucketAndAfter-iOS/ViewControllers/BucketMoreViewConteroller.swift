@@ -8,8 +8,13 @@
 import UIKit
 import SnapKit
 import Then
+import SwiftData
 
 final class BucketMoreViewConteroller : UIViewController {
+    var bucketInfo : [BucketInfo] = []
+    var context = Container.mainContext
+    var i : Int = 0
+    
     let scrollView = UIScrollView()
     let stackView = UIStackView().then {
         $0.spacing = 16
@@ -56,9 +61,6 @@ final class BucketMoreViewConteroller : UIViewController {
         setupLayout()
         setButtonAction()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        setText()
-    }
     private func setupLayout() {
         view.addSubview(navBar)
         view.addSubview(scrollView)
@@ -92,11 +94,36 @@ final class BucketMoreViewConteroller : UIViewController {
             self.navigationController?.pushViewController(BucketEditViewController(), animated: true)
         }
         deleteButton.buttonTapped = {
-            //삭제 코드
+            
+            let item = self.bucketInfo[self.i]
+            self.context.delete(item)
+            
+            do {
+                try self.context.save()
+                print("삭제 성공 야호!")
+            } catch {
+                print("삭제 실패..ㅜㅜ \nerror : \(error)")
+            }
+            
             self.navigationController?.popViewController(animated: true)
         }
     }
-    func setText() {
-        //여기에 로컬에서 가져와 text 설정하는거 넣기
+    func setText(i : Int) {
+        self.i = i
+        do {
+            let descriptor = FetchDescriptor<BucketInfo>()
+            bucketInfo = try context.fetch(descriptor)
+            
+            let data = bucketInfo[i]
+            nameT.text = data.name
+            moreT.text = data.moreInfo
+            
+            thoughtL.isHidden = !data.isDone
+            thoughtT.isHidden = !data.isDone
+            thoughtT.text = data.thoughts
+            
+        } catch {
+            print("버킷 목록 불러오기 실패..ㅜㅜ: \(error)")
+        }
     }
 }
