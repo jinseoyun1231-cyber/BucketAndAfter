@@ -13,6 +13,7 @@ import SwiftData
 final class BucketMoreViewConteroller : UIViewController {
     var bucketInfo : [BucketInfo] = []
     var context = Container.mainContext
+    var i : Int = 0
     
     let scrollView = UIScrollView()
     let stackView = UIStackView().then {
@@ -93,11 +94,22 @@ final class BucketMoreViewConteroller : UIViewController {
             self.navigationController?.pushViewController(BucketEditViewController(), animated: true)
         }
         deleteButton.buttonTapped = {
-            //삭제 코드
+            
+            let item = self.bucketInfo[self.i]
+            self.context.delete(item)
+            
+            do {
+                try self.context.save()
+                print("삭제 성공 야호!")
+            } catch {
+                print("삭제 실패..ㅜㅜ \nerror : \(error)")
+            }
+            
             self.navigationController?.popViewController(animated: true)
         }
     }
     func setText(i : Int) {
+        self.i = i
         do {
             let descriptor = FetchDescriptor<BucketInfo>()
             bucketInfo = try context.fetch(descriptor)
