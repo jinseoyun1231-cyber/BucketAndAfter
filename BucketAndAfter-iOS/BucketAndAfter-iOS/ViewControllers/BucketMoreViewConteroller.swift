@@ -105,7 +105,9 @@ final class BucketMoreViewConteroller : UIViewController {
             let data = bucketInfo[i]
             nameT.text = data.name
             moreT.text = data.moreInfo
-            thoughtL.isHidden = data.isDone
+            
+            thoughtL.isHidden = !data.isDone
+            thoughtT.isHidden = !data.isDone
             thoughtT.text = data.thoughts
             
         } catch {
