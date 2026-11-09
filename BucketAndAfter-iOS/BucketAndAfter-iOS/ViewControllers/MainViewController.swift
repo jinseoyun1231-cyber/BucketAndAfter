@@ -54,7 +54,6 @@ class MainViewController: UIViewController {
         
         navBar.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(126)
         }
         scrollView.snp.makeConstraints {
             $0.top.equalTo(navBar.snp.bottom)
@@ -86,8 +85,6 @@ class MainViewController: UIViewController {
         } catch {
             print("버킷 목록 불러오기 실패..ㅜㅜ: \(error)")
         }
-        
-        
     }
     @objc private func plusButtonTapped() {
         print("생성버튼 탭")

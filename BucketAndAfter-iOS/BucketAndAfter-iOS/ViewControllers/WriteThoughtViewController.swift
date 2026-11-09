@@ -5,4 +5,11 @@
 //  Created by Seoyun Jin on 10/26/26.
 //
 
-import Foundation
+import UIKit
+import SnapKit
+import Then
+import SwiftData
+
+final class WriteThoughtViewController : UIViewController {
+    
+}
