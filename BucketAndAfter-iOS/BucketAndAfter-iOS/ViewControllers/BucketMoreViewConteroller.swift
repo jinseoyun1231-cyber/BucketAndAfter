@@ -88,13 +88,14 @@ final class BucketMoreViewConteroller : UIViewController {
     }
     private func setButtonAction() {
         writeButton.buttonTapped = {
-            self.navigationController?.pushViewController(WriteThoughtViewController(), animated: true)
+            let writeVC = WriteThoughtViewController()
+            self.navigationController?.pushViewController(writeVC, animated: true)
+            writeVC.setupTexts(i: self.i)
         }
         editButton.buttonTapped = {
             self.navigationController?.pushViewController(BucketEditViewController(), animated: true)
         }
         deleteButton.buttonTapped = {
-            
             let item = self.bucketInfo[self.i]
             self.context.delete(item)
             

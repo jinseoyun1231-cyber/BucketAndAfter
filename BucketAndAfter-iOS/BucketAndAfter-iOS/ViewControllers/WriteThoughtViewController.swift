@@ -66,4 +66,16 @@ final class WriteThoughtViewController : UIViewController {
             $0.trailing.equalToSuperview().inset(16)
         }
     }
+    func setupTexts(i : Int) {
+        do {
+            let descritor = FetchDescriptor<BucketInfo>()
+            bucketInfo = try context.fetch(descritor)
+            let data = bucketInfo[i]
+            nameT.text = data.name
+            moreT.text = data.moreInfo
+            thoughtTextField.textField.text = data.thoughts
+        } catch {
+            print("소감작성페이지 텍스트 설정 실패 \nerror: \(error)")
+        }
+    }
 }
