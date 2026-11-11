@@ -14,11 +14,6 @@ final class WriteThoughtViewController : UIViewController {
     var bucketInfo : [BucketInfo] = []
     var context = Container.mainContext
     
-    let stackView = UIStackView().then {
-        $0.axis = .vertical
-        $0.spacing = 16
-        $0.alignment = .leading
-    }
     let scrollView = UIScrollView()
     let navBar = NavigationBarView()
     
@@ -43,11 +38,8 @@ final class WriteThoughtViewController : UIViewController {
         
         view.addSubview(scrollView)
         
-        scrollView.addSubview(stackView)
-        scrollView.addSubview(submitButton)
-        
-        [nameT, moreT, thoughtTextField].forEach {
-            stackView.addArrangedSubview($0)
+        [nameT, moreT, thoughtTextField, submitButton].forEach {
+            scrollView.addSubview($0)
         }
         
         navBar.snp.makeConstraints {
@@ -57,13 +49,21 @@ final class WriteThoughtViewController : UIViewController {
             $0.top.equalTo(navBar.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
         }
-        stackView.snp.makeConstraints {
-            $0.top.bottom.equalTo(scrollView.contentLayoutGuide)
-            $0.leading.trailing.equalToSuperview().inset(16)
+        nameT.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(16)
+            $0.leading.trailing.equalTo(scrollView.frameLayoutGuide).inset(16)
+        }
+        moreT.snp.makeConstraints {
+            $0.leading.trailing.equalTo(nameT)
+            $0.top.equalTo(nameT.snp.bottom).offset(16)
+        }
+        thoughtTextField.snp.makeConstraints {
+            $0.leading.trailing.equalTo(scrollView.frameLayoutGuide)
+            $0.top.equalTo(moreT.snp.bottom).offset(16)
         }
         submitButton.snp.makeConstraints {
             $0.top.equalTo(thoughtTextField.snp.bottom).offset(16)
-            $0.trailing.equalToSuperview().inset(16)
+            $0.trailing.equalTo(scrollView.frameLayoutGuide).inset(16)
         }
     }
     func setupTexts(i : Int) {
