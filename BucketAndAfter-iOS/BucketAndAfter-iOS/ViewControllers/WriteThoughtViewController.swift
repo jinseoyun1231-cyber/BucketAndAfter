@@ -13,6 +13,7 @@ import SwiftData
 final class WriteThoughtViewController : UIViewController {
     var bucketInfo : [BucketInfo] = []
     var context = Container.mainContext
+    var i : Int = 0
     
     let scrollView = UIScrollView()
     let navBar = NavigationBarView()
@@ -26,12 +27,25 @@ final class WriteThoughtViewController : UIViewController {
         $0.textColor = .black
     }
     let thoughtTextField = LongInputView(placeholderT: "여기에 달성 이후의 소감을 작성하세요")
-    let submitButton = ButtonView(text: "확인")
+    let submitButton : ButtonView = ButtonView(text: "확인")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupLayout()
+        
+        submitButton.buttonTapped = {
+            let item = self.bucketInfo[self.i]
+            item.isDone = true
+            item.thoughts = self.thoughtTextField.textField.text
+            do {
+                try self.context.save()
+                self.navigationController?.popViewController(animated: true)
+            } catch {
+                print("소감 작성 저장 실패")
+            }
+            
+        }
     }
     private func setupLayout() {
         view.addSubview(navBar)
@@ -67,6 +81,7 @@ final class WriteThoughtViewController : UIViewController {
         }
     }
     func setupTexts(i : Int) {
+        self.i = i
         do {
             let descritor = FetchDescriptor<BucketInfo>()
             bucketInfo = try context.fetch(descritor)
