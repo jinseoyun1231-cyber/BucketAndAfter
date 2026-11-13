@@ -58,8 +58,12 @@ final class BucketMoreViewConteroller : UIViewController {
     
     override func viewDidLoad() {
         view.backgroundColor = .white
-        setupLayout()
+        
         setButtonAction()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        setupLayout()
+        setText(i: self.i)
     }
     private func setupLayout() {
         view.addSubview(navBar)
@@ -101,7 +105,6 @@ final class BucketMoreViewConteroller : UIViewController {
             
             do {
                 try self.context.save()
-                print("삭제 성공 야호!")
             } catch {
                 print("삭제 실패..ㅜㅜ \nerror : \(error)")
             }
